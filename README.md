@@ -1,1 +1,1 @@
-"# Cafe-Royale" 
+Cafe-Royale 
