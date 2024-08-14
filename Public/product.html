@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Products</title>
     <!-- External Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&family=Open+Sans:wght@600&display=swap" rel="stylesheet">
     <!-- CSS for styling -->
     <style>
         body {
@@ -17,17 +17,25 @@
             margin: 0;
             padding: 0;
             color: #444;
+            transition: background-color 0.3s ease-in-out;
         }
         .container {
             width: 80%;
             margin: 0 auto;
             padding-top: 50px;
             text-align: center;
+            animation: fadeIn 1s ease-in-out;
         }
         h1 {
+            font-family: 'Lobster', cursive;
             color: #ffffff;
-            font-size: 2.5em;
+            font-size: 3em;
             margin-bottom: 20px;
+            animation: slideIn 1s ease-in-out;
+            transition: color 0.3s ease-in-out;
+        }
+        h1:hover {
+            color: #ff7e5f;
         }
         form {
             background-color: #ffffff;
@@ -36,6 +44,11 @@
             box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
             margin-top: 30px;
             text-align: left;
+            animation: scaleUp 0.8s ease-in-out;
+            transition: transform 0.3s ease-in-out;
+        }
+        form:hover {
+            transform: scale(1.05);
         }
         form label {
             display: block;
@@ -64,10 +77,12 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 1.2em;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.3s ease-in-out;
+            margin-top: 20px;
         }
         form input[type="submit"]:hover {
             background-color: #d0664c;
+            transform: translateY(-3px);
         }
         .product-options {
             display: grid;
@@ -78,14 +93,68 @@
         .product-options label {
             display: flex;
             align-items: center;
-            font-weight: normal;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: transform 0.2s ease;
+        }
+        .product-options label:hover {
+            transform: translateY(-3px);
+        }
+        .action-buttons {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .action-buttons button {
+            background-color: #ff7e5f;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 5px;
+            transition: background-color 0.3s, transform 0.3s ease-in-out;
+        }
+        .action-buttons button:hover {
+            background-color: #d0664c;
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes scaleUp {
+            from { transform: scale(0.8); }
+            to { transform: scale(1); }
         }
     </style>
+
+    <!-- JavaScript to Select/Deselect All -->
+    <script>
+        function selectAll() {
+            let checkboxes = document.querySelectorAll('.product-options input[type="checkbox"]');
+            checkboxes.forEach(checkbox => checkbox.checked = true);
+        }
+
+        function deselectAll() {
+            let checkboxes = document.querySelectorAll('.product-options input[type="checkbox"]');
+            checkboxes.forEach(checkbox => checkbox.checked = false);
+        }
+    </script>
 </head>
 <body>
 
 <div class="container">
-    <h1>Select Your Products</h1>
+    <h1>Complete Your Details & Preferences</h1>
 
     <!-- Web-to-Lead Form -->
     <form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00D5j00000D3Kln" method="POST">
@@ -123,8 +192,9 @@
         <label for="country">Country</label>
         <input id="country" maxlength="40" name="country" size="20" type="text" required /><br>
 
-        <!-- Product Selection -->
-        <label for="product">Product:</label><br>
+        <!-- Products Selection -->
+        <label for="products">Products:</label><br>
+        
         <div class="product-options">
             <label><input type="checkbox" name="00NJ4000000eLBt" value="Coffee Brazil Blend 1kg"> Coffee Brazil Blend 1kg</label>
             <label><input type="checkbox" name="00NJ4000000eLBt" value="Coffee Columbia Blend 1kg"> Coffee Columbia Blend 1kg</label>
@@ -140,10 +210,15 @@
             <label><input type="checkbox" name="00NJ4000000eLBt" value="Coffee Grinder Lux"> Coffee Grinder Lux</label>
         </div>
 
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button type="button" onclick="selectAll()">Select All</button>
+            <button type="button" onclick="deselectAll()">Unselect All</button>
+        </div>
+
         <!-- Submit Button -->
-        <input type="submit" name="submit" value="Submit">
+        <input type="submit" name="submit" value="Submit" />
     </form>
 </div>
-
 </body>
 </html>
